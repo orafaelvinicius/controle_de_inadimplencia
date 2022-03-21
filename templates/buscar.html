@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <i class="circle-preloader"></i>
+        <img src="{% static 'img/core-img/prediocor.png' %}" alt="">
+    </div>
+
+    {%  include 'partials/_busca.html' %}
+
+    {%  include 'partials/_menu.html' %}
+
+    <!-- ##### Best Receipe Area Start ##### -->
+    <section class="best-receipe-area">
+        <div class="container">
+            <h1>Buscar inquilino</h1>
+            <div class="row">
+
+                <!-- Processando dados da view -->
+                {% if inquilinos %}
+                {% for inquilino in inquilinos %}
+                
+                <!-- Single Best Receipe Area -->
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="single-best-receipe-area mb-30">
+                        <div class="receipe-content">
+                            <a href="{% url 'pageinquilino' inquilino.id %}">                                
+                                <h3>{{ inquilino.nome }}</h3>
+                                <h5>Status do cliente<p>{{ inquilino.status_de_pagamentos }}</p></h5>
+                                <h5>Tamanho do kitnet <p>{{ inquilino.tamanho_do_kitnet }}</p></h5>
+                            </a>                                                    
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <p>Inquilino não encontrado.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    <!-- ##### Best Receipe Area End ##### -->
+
+    {% include 'partials/_footer.html' %}
+
+{% endblock %}

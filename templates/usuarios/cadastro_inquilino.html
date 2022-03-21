@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Preloader -->
+<div id="preloader">
+    <i class="circle-preloader"></i>
+    <img src="{% static 'img/core-img/prediocor.png' %}" alt="">
+</div>
+ 
+{% include 'partials/_busca.html' %}
+ 
+{% include 'partials/_menu.html' %}
+ 
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading">
+                   <h3>Cadastro de inquilino</h3>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col-12">
+            <p>Todos os campos são obrigatórios</p>
+                <div class="contact-form-area">
+                    <form action="{% url 'cria_inquilino' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 col-lg-12">
+                                <label for="nome"><b>Nome do inquilino</b></label>
+                                <input type="text" id="nome" class="form-control" name="nome"  placeholder="Ex. Pedrinho Silva" required>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                                <label for="file"><b>CPF</b></label>
+                                <input type="text" id="cpf" class="form-control" name="cpf" placeholder="123.456.789-00" required>
+                            </div>
+                            <div class="col-12 col-lg-3">
+                            <label for="file"><b>Tamanho do kitnet</b></label>
+                                <select type="hidden" class=".form-control" name="tamanho_do_kitnet" id="tamanho_do_kitnet" required>
+                                    <option value="Pequeno">Pequeno</option>
+                                    <option value="Medio">Medio</option>
+                                    <option value="Grande">Grande</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg-3">
+                                <label for="file"><b>Valor do aluguel</b></label>
+                                <input type="number" class="form-control" name="valor_do_aluguel" placeholder="R$" required>
+                            </div>
+                            
+                            <div class="col-12 col-lg-3">
+                                <label for="file"><b>Data do pagamento</b></label>
+                                <input type="date" class="form-control" name="ultimo_pagamento" required>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn delicious-btn mt-30" type="submit">Adicionar novo inquilino</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+{% include 'partials/_footer.html' %}
+{% endblock %}
