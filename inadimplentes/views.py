@@ -13,10 +13,10 @@ def pageinquilino(request, inquilino_id):
     inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
 
     inquilino_a_exibir = {
-        'inquilinos' : inquilino_id
+        'inquilino' : inquilino
     }
 
-    return render(request, "pageinquilino.html", inquilino_a_exibir)
+    return render(request, "pagina_inquilino.html", inquilino_a_exibir)
 
 def buscar(request):
     lista_inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all()
@@ -116,6 +116,19 @@ def cria_inquilino(request):
         return redirect('inquilinos')
     else:
         return render(request, 'usuarios/cadastro_inquilino.html')
+
+def deleta_inquilino(request, inquilino_id):
+    inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
+    inquilino.delete()
+    return redirect('inquilinos')
+
+def edita_inquilino(request, inquilino_id):
+    inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
+    inquilino_a_editar = {
+        'inquilino' : inquilino
+    }
+    return render(request, 'edita_inquilino.html', inquilino_a_editar)
+
 
 def campo_vazio(campo):
     return not campo.strip()
