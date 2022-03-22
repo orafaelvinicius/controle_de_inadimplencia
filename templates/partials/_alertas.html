@@ -1,0 +1,10 @@
+<!-- Mensagens de sucesso e erro criada nas configurações -->
+{% if messages %}
+    {% for message in messages %}
+
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{ message }}
+    </div>
+
+    {% endfor %}
+{% endif %}

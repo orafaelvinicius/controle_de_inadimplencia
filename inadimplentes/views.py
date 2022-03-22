@@ -2,7 +2,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.models import User
 from .models import Inquilino
-from django.contrib import auth
+from django.contrib import auth, messages
 
 
 @csrf_exempt
@@ -38,26 +38,29 @@ def cadastro(request):
         email = request.POST['email']
         senha = request.POST['password']
         senha2 = request.POST['password2']
-        if not nome.strip():
-            print('O campo "Nome" não pode ficar em branco')
+        if campo_vazio(nome):
+            messages.error(request, 'O campo "Nome" não pode ficar em branco')
             return redirect('cadastro')
 
-        if not email.strip():
-            print('O campo "E-mail" não pode ficar em branco')
+        if campo_vazio(email):
+            messages.error(request, 'O campo "E-mail" não pode ficar em branco')
             return redirect('cadastro')
 
-        if senha != senha2:
-            print('As senhas não são iguais.')
+        if senhas_nao_sao_iguais(senha, senha2):
+            messages.error(request, 'As senhas não são iguais.')
             return redirect('cadastro')
 
         if User.objects.filter(email=email).exists():
-            print('Usuário já cadastrado')
+            messages.error(request, 'Usuário já cadastrado')
+            return redirect('cadastro')
+        
+        if User.objects.filter(username=nome).exists():
+            messages.error(request, 'Usuário já cadastrado')
             return redirect('cadastro')
 
         user = User.objects.create_user(username=nome, email=email, password=senha)
         user.save()
-
-        print('Usuário cadastrado com sucesso!')
+        messages.success(request, 'Usuário cadastrado com sucesso!')
         return redirect('login')
     else:
         return render(request, 'usuarios/cadastro.html')
@@ -66,8 +69,8 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         senha = request.POST['senha']
-        if email == "" or senha == "":
-            print("Os campos e-mail e senha não podem ficar em branco.")
+        if campo_vazio(email) or campo_vazio(senha):
+            messages.error(request, "Os campos e-mail ou senha não podem ficar em branco.")
             return redirect('login')
 
         if User.objects.filter(email=email).exists():
@@ -75,8 +78,8 @@ def login(request):
             user = auth.authenticate(request, username=nome, password=senha)
             if user is not None:
                 auth.login(request, user)
-                print('Login realizado com sucesso.')
                 return redirect('inquilinos')
+    messages.error(request, "Login ou senha inválido. Tente novamente")
     return render(request, 'usuarios/login.html')
 
 def logout(request):
@@ -114,4 +117,9 @@ def cria_inquilino(request):
     else:
         return render(request, 'usuarios/cadastro_inquilino.html')
 
+def campo_vazio(campo):
+    return not campo.strip()
+
+def senhas_nao_sao_iguais(senha, senha2):
+    return senha != senha2
 
