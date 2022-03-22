@@ -7,7 +7,7 @@ from django.contrib import auth
 
 @csrf_exempt
 def index(request):
-    return redirect('usuarios/login')
+    return redirect('login')
 
 def pageinquilino(request, inquilino_id):
     inquilinos = get_object_or_404(Inquilino, pk=inquilino_id)
@@ -113,3 +113,7 @@ def cria_inquilino(request):
         return redirect('inquilinos')
     else:
         return render(request, 'usuarios/cadastro_inquilino.html')
+
+def calcular_inadimplente:
+    pass
+
