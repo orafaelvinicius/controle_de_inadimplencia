@@ -1,5 +1,5 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.contrib.auth.models import User
 from .models import Inquilino
 from django.contrib import auth
@@ -10,11 +10,12 @@ def index(request):
     return redirect('login')
 
 def pageinquilino(request, inquilino_id):
-    inquilinos = get_object_or_404(Inquilino, pk=inquilino_id)
+    inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
 
     inquilino_a_exibir = {
         'inquilinos' : inquilino_id
     }
+
     return render(request, "pageinquilino.html", inquilino_a_exibir)
 
 def buscar(request):
@@ -83,7 +84,6 @@ def logout(request):
     return redirect('login')
 
 def inquilinos(request):
-
     inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all() # Exibindo totos inquilinos na ordem inversa
     
     dados = {
@@ -114,6 +114,4 @@ def cria_inquilino(request):
     else:
         return render(request, 'usuarios/cadastro_inquilino.html')
 
-def calcular_inadimplente:
-    pass
 
