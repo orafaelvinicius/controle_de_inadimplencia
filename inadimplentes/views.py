@@ -3,20 +3,14 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib.auth.models import User
 from .models import Inquilino
 from django.contrib import auth, messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 @csrf_exempt
 def index(request):
     return redirect('login')
-
-def pageinquilino(request, inquilino_id):
-    inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
-
-    inquilino_a_exibir = {
-        'inquilino' : inquilino
-    }
-
-    return render(request, "pagina_inquilino.html", inquilino_a_exibir)
 
 def buscar(request):
     lista_inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all()
@@ -87,10 +81,16 @@ def logout(request):
     return redirect('login')
 
 def inquilinos(request):
-    inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all() # Exibindo totos inquilinos na ordem inversa
+    inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all() 
+    status_de_pagamentos = Inquilino.objects.filter().values('status_de_pagamentos').distinct('status_de_pagamentos')
     
+    paginator = Paginator(inquilinos, 6)
+    page = request.GET.get('page')
+    inquilinos_por_pagina = paginator.get_page(page)
+
     dados = {
-        'inquilinos' : inquilinos 
+        'inquilinos' : inquilinos_por_pagina,
+        'status_de_pagamentos': status_de_pagamentos,
     }
 
     if request.user.is_authenticated:
@@ -128,6 +128,22 @@ def edita_inquilino(request, inquilino_id):
         'inquilino' : inquilino
     }
     return render(request, 'edita_inquilino.html', inquilino_a_editar)
+
+def atualiza_inquilino(request, inquilino_id):
+    if request.method == 'POST':
+        inquilino_id = request.POST['inquilino_id']
+        i = Inquilino.objects.get(pk=inquilino_id)
+        i.nome = request.POST['nome']
+        i.cpf = request.POST['cpf']
+        i.tamanho_do_kitnet = request.POST['tamanho_do_kitnet']
+        i.status_de_pagamentos = request.POST['status_de_pagamentos']
+        i.valor_do_aluguel = request.POST['valor_do_aluguel']
+        i.ultimo_pagamento = request.POST['ultimo_pagamento']
+        i.save()
+        messages.success(request, "Dados atualizados com sucesso")
+        return redirect('index')
+    else:
+        messages.error(request, "Erro ao salvar as atualizações")
 
 
 def campo_vazio(campo):

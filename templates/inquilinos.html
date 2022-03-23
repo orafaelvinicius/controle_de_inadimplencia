@@ -9,7 +9,6 @@
     </div>
 
     {%  include 'partials/_busca.html' %}
-
     {%  include 'partials/_menu.html' %}
 
     <!-- ##### Best Receipe Area Start ##### -->
@@ -18,8 +17,32 @@
             <div class="section-heading">
                 <h1>Inquilinos</h1>
             </div>
-            <div class="row">
 
+            <!-- Filtros -->
+            <section class="best-receipe-area">
+                <div class="section-heading">
+                    <div class=" col-sm-6 col-lg-3">
+                        <h6>Filtrar por:</h6>
+                        <select type="text" name="status_de_pagamentos">
+                        {% for status_de_pagamentos in status_de_pagamentos %}
+                            <option value="">Selecione um filtro</option>
+                            <option value="{{status_de_pagamentos}}">{{Inquilinos.status_de_pagamentos}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                
+                <!-- Botao de calcular percentual de inadimplentes/total -->
+                <div>
+
+                    <a href="{% url 'cadastro' %}" type="button" class="btn btn-outline-warning">CALCULAR PERCENTUAL (%)<br> DE INADIMPLENTES</a>
+
+                </div>
+
+
+            </div>
+            </section>
+
+            <div class="row">
                 <!-- Processando dados da view -->
                 {% if inquilinos %}
                 {% for inquilino in inquilinos %}
@@ -28,7 +51,7 @@
                 <div class="col-12 col-sm-6 col-lg-4">
                     <div class="single-best-receipe-area mb-30">
                         <div class="receipe-content">
-                            <a href="{% url 'pageinquilino' inquilino.id %}">                                
+                            <a href="{% url 'edita_inquilino' inquilino.id %}">                                
                                 <h3>{{ inquilino.nome }}</h3>
                                 <h5>Status do cliente<p>{{ inquilino.status_de_pagamentos }}</p></h5>
                                 <h5>Tamanho do kitnet <p>{{ inquilino.tamanho_do_kitnet }}</p></h5>
@@ -45,6 +68,46 @@
         </div>
     </section>
     <!-- ##### Best Receipe Area End ##### -->
+
+    <!-- ##### Pagination ##### -->
+    <section class="top-catagory-area section-padding-20-0">
+        <div class="container">
+            {% if inquilinos.has_other_pages %}
+            <ul class="pagination">
+                {% if inquilinos.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{ inquilinos.previous_page_number }}" class="page-link">&laquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">&laquo;</a>
+                </li>
+                {% endif %}
+                {% for pagina in inquilinos.paginator.page_range %}
+                {% if inquilinos.number == pagina %}
+                <li class="page-item active">
+                    <a class="page-link">{{ pagina }}</a>
+                </li>
+                {% else %}
+                <li class="page-item">
+                    <a href="?page={{ pagina }}" class="page-link">{{ pagina }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if inquilinos.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ inquilinos.next_page_number }}" class="page-link">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </section>
+    <!-- ##### Pagination End ##### -->
 
     {% include 'partials/_footer.html' %}
 

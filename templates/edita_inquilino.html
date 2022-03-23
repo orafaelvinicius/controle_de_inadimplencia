@@ -26,50 +26,59 @@
             <div class="col-12">
             <p>Todos os campos são obrigatórios</p>
                 <div class="contact-form-area">
-                    <form action="" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="text" id="inquilino_id" class="form-control" name="inquilino_id" value="{{inquilino.id}}" hidden>
-                            <div class="row">
-                            <div class="col-12 col-lg-12">
-                                <label for="nome"><b>Nome</b></label>
-                                <input type="text" id="nome" class="form-control" name="nome" placeholder="Ex. Joaquin José" value="{{inquilino.nome}}" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="file"><b>CPF</b></label>
-                                <input type="text" class="form-control" name="cpf"  placeholder="123.456.789-00" value="{{inquilino.cpf}}" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="file"><b>Tamanho do Kitnet</b></label>
-                                <select type="hidden" class=".receipe-content" name="tamanho_do_kitnet" id="tamanho_do_kitnet" required>
-                                    <option value="">{{inquilino.tamanho_do_kitnet}} (ATUAL)</option>
-                                    <option value="Pequeno">Pequeno</option>
-                                    <option value="Medio">Medio</option>
-                                    <option value="Grande">Grande</option>
-                                </select>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <label for="file"><b>Status de pagamento</b></label>
-                                <select type="hidden" class="#" name="status_de_pagamentos" placeholder="ADIMPLENTE" value="{{inquilino.status_de_pagamentos}}" required>
-                                    <option value="ADIMPLENTE">ADIMPLENTE</option>
-                                    <option value="INADIMPLENTE">INADIMPLENTE</option>
-                                </select>
-                                </div>
-                            <div class="col-12 col-lg-4">
-                                <label for="file"><b>Valor do Aluguel</b></label>
-                                <input type="text" class="form-control" name="valor_do_aluguel" placeholder="R$200" value="R$ {{inquilino.valor_do_aluguel}}" required>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <label for="file"><b>Ultimo pagamento</b></label>
-                                <input type="text" class="form-control" name="ultimo_pagamento" placeholder="19/03/2022" value="{{inquilino.ultimo_pagamento}}" required>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <label for="file"><b>Tempo de inadimplência</b></label>
-                                
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-success" type="submit">Atualizar</button>
-                            </div>
+                    <form action="{% url 'atualiza_inquilino' inquilino.id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="text" id="inquilino_id" class="form-control" name="inquilino_id" value="{{inquilino.id}}" hidden>
+                        <div class="row">
+                        <div class="col-12 col-lg-12">
+                            <label for="nome"><b>Nome</b></label>
+                            <input type="text" id="nome" class="form-control" name="nome" placeholder="Ex. Joaquin José" value="{{inquilino.nome}}" required>
                         </div>
+                        
+                        <div class="col-12">
+                            <label for="file"><b>CPF</b></label>
+                            <input type="text" class="form-control" name="cpf"  placeholder="123.456.789-00" value="{{inquilino.cpf}}" required>
+                        </div>
+
+                        <div class="col-12 col-lg-3">
+                            <label for="file"><b>Tamanho do Kitnet</b></label>
+                            <select type="hidden" class="#" name="tamanho_do_kitnet" id="tamanho_do_kitnet" required>
+                                <option value="">{{inquilino.tamanho_do_kitnet}}</option>
+                                <option value="Pequeno">Pequeno</option>
+                                <option value="Medio">Medio</option>
+                                <option value="Grande">Grande</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <label for="file"><b>Status de pagamento</b></label>
+                            <select type="hidden" class="#" name="status_de_pagamentos" value="{{inquilino.status_de_pagamentos}}" required>
+                                <option value="{{inquilino.status_de_pagamentos}}">{{inquilino.status_de_pagamentos}}</option>
+                                <option value="ADIMPLENTE">ADIMPLENTE</option>
+                                <option value="INADIMPLENTE">INADIMPLENTE</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <label for="file"><b>Valor do Aluguel</b></label>
+                            <input type="text" class="form-control" name="valor_do_aluguel" value="R$ {{inquilino.valor_do_aluguel}}" required>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <label for="file"><b>Ultimo pagamento</b></label>
+                            <input type="text" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" required>
+                        </div>
+                        <div class="col-12 col-lg-4">
+
+                            <label for="file"><b>Tempo de inadimplência</b></label>
+
+                            <h3>0 meses</h3>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <button class="btn btn-success" type="submit">Atualizar</button>
+                        </div>
+                        
                     </form>
                 </div>
             </div>

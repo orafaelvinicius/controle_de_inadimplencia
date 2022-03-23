@@ -1,9 +1,8 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-ultimo_pagamento = datetime(2021,2,1,23)
+ultimo_pagamento = datetime(2021,2,1,23) # Ajustar input
 data_do_pagamento = datetime.now()
-
 
 diff = relativedelta(data_do_pagamento, ultimo_pagamento)
 
@@ -12,3 +11,22 @@ if diff.months >= 1 and diff.years > 0:
     print(f'Você está devendo {diff.months} meses ou mais de aluguel. Seu status é de INADIMPLENTE!')
 else:
     print(f"Você está ADIMPLENTE. Seu último pagamento aconteceu a {diff.days} dias atrás")
+
+def calcula_inadimplencia(request, ultimo_pagamento, inquilino_id):
+        if request.method == 'POST':
+            inquilino_id = request.POST['inquilino_id']
+            i = Inquilino.objects.get(pk=inquilino_id)
+            i.ultimo_pagamento = request.POST['ultimo_pagamento']
+            ultimo_pagamento = i.ultimo_pagamento
+            data_do_pagamento = datetime.now()
+            
+
+            diff = relativedelta(data_do_pagamento, ultimo_pagamento)
+            
+            if diff.months >= 1 and diff.years > 0:
+                print(f'Você está devendo {diff.months} meses ou mais de aluguel. Seu status é de INADIMPLENTE!')
+            else:
+                print(f"Você está ADIMPLENTE. Seu último pagamento aconteceu a {diff.days} dias atrás")
+
+            diff.save()
+
