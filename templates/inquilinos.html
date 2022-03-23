@@ -27,6 +27,7 @@
                             <div class="row">
                                 <div class="col-12 col-lg-5">
                                    <select type="text" name="buscar">
+                                        <option value="">Selecione um filtro</option>
                                    {% for status_de_pagamentos in status_de_pagamentos %}
                                         <option value="{{status_de_pagamentos.status_de_pagamentos}}">{{status_de_pagamentos.status_de_pagamentos}}</option>
                                     {% endfor %}

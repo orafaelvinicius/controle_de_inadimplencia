@@ -143,7 +143,7 @@ def atualiza_inquilino(request, inquilino_id):
         i.ultimo_pagamento = request.POST['ultimo_pagamento']
         i.save()
         messages.success(request, "Dados atualizados com sucesso")
-        return redirect('index')
+        return redirect('edita_inquilino')
     else:
         messages.error(request, "Erro ao salvar as atualizações")
 
