@@ -135,6 +135,7 @@ def atualiza_inquilino(request, inquilino_id):
     if request.method == 'POST':
         inquilino_id = request.POST['inquilino_id']
         i = Inquilino.objects.get(pk=inquilino_id)
+
         i.nome = request.POST['nome']
         i.cpf = request.POST['cpf']
         i.tamanho_do_kitnet = request.POST['tamanho_do_kitnet']
@@ -143,7 +144,7 @@ def atualiza_inquilino(request, inquilino_id):
         i.ultimo_pagamento = request.POST['ultimo_pagamento']
         i.save()
         messages.success(request, "Dados atualizados com sucesso")
-        return redirect('edita_inquilino')
+        return redirect('edita_inquilino', inquilino_id=inquilino_id)
     else:
         messages.error(request, "Erro ao salvar as atualizações")
 

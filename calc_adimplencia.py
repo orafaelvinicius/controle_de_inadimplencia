@@ -1,14 +1,14 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-ultimo_pagamento = datetime(2022,2,1) # Ajustar input para receber data do banco de dados
+ultimo_pagamento = datetime(2021, 3, 2) # Ajustar input
 data_do_pagamento = datetime.now()
 
 diff = relativedelta(data_do_pagamento, ultimo_pagamento)
 
 # Imprimindo apenas diferenças menores de 1 ano
-if diff.months >= 1 and diff.years > 0:
-    print(f'Você está devendo {diff.months} meses ou mais de aluguel. Seu status é de INADIMPLENTE!')
+if diff.months >= 1 or diff.years > 0:
+    print(f'INADIMPLENTE a {diff.years} anos e {diff.months} meses!')
 else:
-    print(f"Você está ADIMPLENTE. Seu último pagamento aconteceu a {diff.days} dias atrás")
+    print(f"Está ADIMPLENTE. Último pagamento aconteceu a {diff.days} dias atrás")
 
