@@ -53,12 +53,12 @@
                         <div class="col-12 col-lg-4">
                             <label for="file"><b>Valor do Aluguel</b></label>
                             <input type="number" step=".01"
-                            class="form-control" name="valor_do_aluguel" value="R$ {{inquilino.valor_do_aluguel}}" required>
+                            class="form-control" name="valor_do_aluguel" placeholder="{{inquilino.valor_do_aluguel}}"required>
                         </div>
 
                         <div class="col-12 col-lg-4">
                             <label for="file"><b>Ultimo pagamento</b></label>
-                            <input type="date" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" required>
+                            <input type="date" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" >
                         </div>
 
                         <div class="col-12 col-lg-4">
@@ -74,7 +74,7 @@
 
                             <label for="file"><b>Tempo de inadimplência</b></label>
 
-                            <h3>{{ inquilino.meses_de_inadimplencia }} meses</h3>
+                            <h3>{{ inquilino.calcula_inadimplencia }} meses</h3>
                         </div>
 
                         <div class="col-12 text-center">
