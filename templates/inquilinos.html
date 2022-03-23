@@ -20,26 +20,29 @@
 
             <!-- Filtros -->
             <section class="best-receipe-area">
-                <div class="section-heading">
-                    <div class=" col-sm-6 col-lg-3">
-                        <h6>Filtrar por:</h6>
-                        <select type="text" name="status_de_pagamentos">
-                        {% for status_de_pagamentos in status_de_pagamentos %}
-                            <option value="">Selecione um filtro</option>
-                            <option value="{{status_de_pagamentos}}">{{Inquilinos.status_de_pagamentos}}</option>
-                        {% endfor %}
-                        </select>
+                <div class="receipe-post-search mb-80">
+                    <div class="container">
+                        <form action="{% url 'buscar' %}">
+                            <h6>Filtrar por:</h6>
+                            <div class="row">
+                                <div class="col-12 col-lg-5">
+                                   <select type="text" name="buscar">
+                                   {% for status_de_pagamentos in status_de_pagamentos %}
+                                        <option value="{{status_de_pagamentos.status_de_pagamentos}}">{{status_de_pagamentos.status_de_pagamentos}}</option>
+                                    {% endfor %}
+                                    </select> 
+                                </div>
+                                <div class="col-12 col-lg-2 text-right">
+                                    <button type="submit" class="btn delicious-btn">Buscar</button>
+                                </div>
+                                <!-- Botao de calcular percentual de inadimplentes/total -->
+                                <div>
+                                    <a href="{% url 'cadastro' %}" type="button" class="btn btn-outline-warning">CALCULAR PERCENTUAL (%)<br> DE INADIMPLENTES</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                
-                <!-- Botao de calcular percentual de inadimplentes/total -->
-                <div>
-
-                    <a href="{% url 'cadastro' %}" type="button" class="btn btn-outline-warning">CALCULAR PERCENTUAL (%)<br> DE INADIMPLENTES</a>
-
                 </div>
-
-
-            </div>
             </section>
 
             <div class="row">
@@ -55,6 +58,7 @@
                                 <h3>{{ inquilino.nome }}</h3>
                                 <h5>Status do cliente<p>{{ inquilino.status_de_pagamentos }}</p></h5>
                                 <h5>Tamanho do kitnet <p>{{ inquilino.tamanho_do_kitnet }}</p></h5>
+                                <h5>Tempo de inadimplência <p>{{ inquilino.meses_de_inadimplencia }} meses</p></h5>
                                 <a href="{% url 'edita_inquilino' inquilino.id %}" type="button" class="btn btn-info">EDITAR</a>
                                 <a href="{% url 'deleta_inquilino' inquilino.id %}" type="button" class="btn btn-danger">DELETAR</a>
                             </a>                                                    

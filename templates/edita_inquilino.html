@@ -51,6 +51,16 @@
                         </div>
 
                         <div class="col-12 col-lg-4">
+                            <label for="file"><b>Valor do Aluguel</b></label>
+                            <input type="text" class="form-control" name="valor_do_aluguel" value="R$ {{inquilino.valor_do_aluguel}}" required>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
+                            <label for="file"><b>Ultimo pagamento</b></label>
+                            <input type="text" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" required>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
                             <label for="file"><b>Status de pagamento</b></label>
                             <select type="hidden" class="#" name="status_de_pagamentos" value="{{inquilino.status_de_pagamentos}}" required>
                                 <option value="{{inquilino.status_de_pagamentos}}">{{inquilino.status_de_pagamentos}}</option>
@@ -60,19 +70,10 @@
                         </div>
 
                         <div class="col-12 col-lg-4">
-                            <label for="file"><b>Valor do Aluguel</b></label>
-                            <input type="text" class="form-control" name="valor_do_aluguel" value="R$ {{inquilino.valor_do_aluguel}}" required>
-                        </div>
-
-                        <div class="col-12 col-lg-4">
-                            <label for="file"><b>Ultimo pagamento</b></label>
-                            <input type="text" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" required>
-                        </div>
-                        <div class="col-12 col-lg-4">
 
                             <label for="file"><b>Tempo de inadimplência</b></label>
 
-                            <h3>0 meses</h3>
+                            <h3>{{ inquilino.meses_de_inadimplencia }} meses</h3>
                         </div>
 
                         <div class="col-12 text-center">

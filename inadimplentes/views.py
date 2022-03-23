@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Inquilino
 from django.contrib import auth, messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
@@ -18,7 +20,7 @@ def buscar(request):
     if 'buscar' in request.GET:
         nome_a_buscar = request.GET['buscar']
         if buscar:
-            lista_inquilinos = lista_inquilinos.filter(nome__icontains=nome_a_buscar)
+            lista_inquilinos = lista_inquilinos.filter(Q(nome__icontains=nome_a_buscar) | Q(status_de_pagamentos=nome_a_buscar))
         
     dados = {
         'inquilinos' : lista_inquilinos

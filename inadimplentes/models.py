@@ -21,7 +21,7 @@ class Inquilino(models.Model):
     status_de_pagamentos = models.CharField(max_length=15, choices=status_adimplencia, default='ADIMPLENTE')
     valor_do_aluguel = models.DecimalField(max_digits=13, decimal_places=2, blank=True, null=True)
     ultimo_pagamento = models.DateField(blank=True) 
-    meses_de_inadimplencia = models.CharField(max_length=255, default='ADIMPLENTE')
+    meses_de_inadimplencia = models.CharField(max_length=255, default='0')
 
     def __str__(self):
         return self.nome
