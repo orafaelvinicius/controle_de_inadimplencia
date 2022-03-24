@@ -122,7 +122,6 @@ def cria_inquilino(request):
 def deleta_inquilino(request, inquilino_id):
     inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
     inquilino.delete()
-    messages.success(request, "Inquilino excluído com sucesso")
     return redirect('inquilinos')
 
 def edita_inquilino(request, inquilino_id):
