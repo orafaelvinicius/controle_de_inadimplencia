@@ -122,6 +122,7 @@ def cria_inquilino(request):
 def deleta_inquilino(request, inquilino_id):
     inquilino = get_object_or_404(Inquilino, pk=inquilino_id)
     inquilino.delete()
+    messages.success(request, "Inquilino excluído com sucesso")
     return redirect('inquilinos')
 
 def edita_inquilino(request, inquilino_id):
@@ -156,17 +157,16 @@ def campo_vazio(campo):
 def senhas_nao_sao_iguais(senha, senha2):
     return senha != senha2
 
-def percentual_inadimplencia(cpf):
-    print('chamou a percentual')
-    inquilinos = Inquilino.objects.all()
-    total_inquilinos = inquilinos.filter(cpf)
-    inadimplentes = Inquilino.objects.filter(status_de_pagamentos='INADIMPLENTES').values('status_de_pagamentos')
-    print('inquilino', inquilinos)
-    print('total', total_inquilinos)
-    print('inadimplentes', inadimplentes)
+def percentual_inadimplencia(request):
+    lista_inquilinos = Inquilino.objects.order_by('-status_de_pagamentos').all()
 
-    percentual_inadimplentes = (total_inquilinos / inadimplentes) * 100
-    print('percentual', percentual_inadimplentes)
+    if 'buscar' in request.GET:
+        nome_a_buscar = request.GET['buscar']
+        if buscar:
+            lista_inquilinos = lista_inquilinos.filter(Q(nome__icontains=nome_a_buscar) | Q(status_de_pagamentos=nome_a_buscar))
+        
+    dados = {
+        'inquilinos' : lista_inquilinos
+    }
 
-    print(f'Atualmente o percentual de inadimplentes é de {percentual_inadimplentes} %')
-    return redirect('index', percentual_inadimplencia)
+    return render(request, 'buscar.html', dados)
