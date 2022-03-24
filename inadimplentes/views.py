@@ -146,7 +146,8 @@ def atualiza_inquilino(request, inquilino_id):
         messages.success(request, "Dados atualizados com sucesso")
         return redirect('edita_inquilino', inquilino_id=inquilino_id)
     else:
-        messages.error(request, "Erro ao salvar as atualizações")
+        messages.error(request, "Erro ao salvar as atualizações. Preencha todos os campos.")
+        return redirect('edita_inquilino', inquilino_id=inquilino_id)
 
 
 def campo_vazio(campo):
@@ -155,3 +156,17 @@ def campo_vazio(campo):
 def senhas_nao_sao_iguais(senha, senha2):
     return senha != senha2
 
+def percentual_inadimplencia(cpf):
+    print('chamou a percentual')
+    inquilinos = Inquilino.objects.all()
+    total_inquilinos = inquilinos.filter(cpf)
+    inadimplentes = Inquilino.objects.filter(status_de_pagamentos='INADIMPLENTES').values('status_de_pagamentos')
+    print('inquilino', inquilinos)
+    print('total', total_inquilinos)
+    print('inadimplentes', inadimplentes)
+
+    percentual_inadimplentes = (total_inquilinos / inadimplentes) * 100
+    print('percentual', percentual_inadimplentes)
+
+    print(f'Atualmente o percentual de inadimplentes é de {percentual_inadimplentes} %')
+    return redirect('index', percentual_inadimplencia)

@@ -1,3 +1,4 @@
+from tkinter import Entry
 from django.db import models
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
@@ -35,16 +36,11 @@ class Inquilino(models.Model):
 
         if diff.months >= 1 or diff.years > 0:
             self.inadimplencia = diff.months
-
+            self.status_de_pagamentos = "INADIMPLENTE"
             return self.inadimplencia
         else:
             self.inadimplencia = '0'
+            self.status_de_pagamentos = "ADIMPLENTE"
             return self.inadimplencia
             
-    def percentual_inadimplencia(self):
-        total_inquilinos = 100
-        total_inadimplentes = 30 
-
-        percentual_inadimplentes  = int((total_inadimplentes / total_inquilinos ) * 100)
-
-        print(f'Atualmente o percentual de inadimplentes é de {percentual_inadimplentes} %')
+    

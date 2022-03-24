@@ -42,7 +42,7 @@
 
                         <div class="col-12 col-lg-3">
                             <label for="file"><b>Tamanho do Kitnet</b></label>
-                            <select type="text" class="#" name="tamanho_do_kitnet" id="tamanho_do_kitnet" >
+                            <select type="hidden" class="#" name="tamanho_do_kitnet" id="tamanho_do_kitnet" >
                                 <option value="">{{inquilino.tamanho_do_kitnet}}</option>
                                 <option value="Pequeno">Pequeno</option>
                                 <option value="Medio">Medio</option>
@@ -53,12 +53,12 @@
                         <div class="col-12 col-lg-4">
                             <label for="file"><b>Valor do Aluguel</b></label>
                             <input type="number" step=".01"
-                            class="form-control" name="valor_do_aluguel" placeholder="{{inquilino.valor_do_aluguel}}"required>
+                            class="form-control" name="valor_do_aluguel" value="{{inquilino.valor_do_aluguel}}" placeholder="{{inquilino.valor_do_aluguel}}" required>
                         </div>
 
                         <div class="col-12 col-lg-4">
                             <label for="file"><b>Ultimo pagamento</b></label>
-                            <input type="date" class="form-control" name="ultimo_pagamento" value="{{inquilino.ultimo_pagamento}}" >
+                            <input type="date" class="form-control" name="ultimo_pagamento" value="2022-03-21"  >
                         </div>
 
                         <div class="col-12 col-lg-4">

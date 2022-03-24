@@ -13,4 +13,5 @@ urlpatterns = [
     path('deleta_inquilino/<int:inquilino_id>', views.deleta_inquilino, name='deleta_inquilino'),
     path('edita_inquilino/<int:inquilino_id>', views.edita_inquilino, name='edita_inquilino'),
     path('atualiza_inquilino/<int:inquilino_id>', views.atualiza_inquilino, name='atualiza_inquilino'),
+    path('inquilinos', views.percentual_inadimplencia, name='percentual_inadimplencia'),
 ]

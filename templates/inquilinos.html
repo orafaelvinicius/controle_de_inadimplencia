@@ -28,7 +28,7 @@
                                 <div class="col-12 col-lg-5">
                                    <select type="text" name="buscar">
                                         <option value="">Selecione um filtro</option>
-                                   {% for status_de_pagamentos in status_de_pagamentos %}
+                                    {% for status_de_pagamentos in status_de_pagamentos %}
                                         <option value="{{status_de_pagamentos.status_de_pagamentos}}">{{status_de_pagamentos.status_de_pagamentos}}</option>
                                     {% endfor %}
                                     </select> 
@@ -36,16 +36,18 @@
                                 <div class="col-12 col-lg-2 text-right">
                                     <button type="submit" class="btn delicious-btn">Buscar</button>
                                 </div>
-
-                                <!-- Botao de calcular percentual de inadimplentes/total -->
-                                <div>
-                                    <button type="" class="btn btn-outline-warning" onclick="#" >CALCULAR PERCENTUAL (%) DE INADIMPLENTES </button>
-                                    
-                                        <p class="resultado" id="resultado">Inadimplência atual está em: x %</p>
-                                </div>
-
-                            </div>
-                        </form>
+                         
+                                </form>
+                                
+                            <!-- Botao de calcular percentual de inadimplentes/total -->
+                            <form action="{% url 'percentual_inadimplencia' %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="text" id="inquilino_id" class="form-control" name="inquilino_id" value="{{inquilino.id}}" hidden>
+                                <button type="submit" class="btn btn-outline-warning" value="percentual_inadimplencia"> CALCULAR PERCENTUAL (%) DE INADIMPLENTES </button>
+                                <p class="resultado" id="resultado">* Botão ainda não funciona</p>
+                                <p>{{percentual_inadimplencia}}</p>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -64,6 +66,7 @@
                                 <h5>Status do cliente<p>{{ inquilino.status_de_pagamentos }}</p></h5>
                                 <h5>Tamanho do kitnet <p>{{ inquilino.tamanho_do_kitnet }}</p></h5>
                                 <h5>Tempo de inadimplência <p>{{ inquilino.calcula_inadimplencia }} meses</p></h5>
+                                <h5>Valor do aluguel <p>R$ {{ inquilino.valor_do_aluguel }}</p></h5>
                                 <a href="{% url 'edita_inquilino' inquilino.id %}" type="button" class="btn btn-info">EDITAR</a>
                                 <a href="{% url 'deleta_inquilino' inquilino.id %}" type="button" class="btn btn-danger">DELETAR</a>
                             </a>                                                    
