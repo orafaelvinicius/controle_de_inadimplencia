@@ -5,8 +5,8 @@ Este projeto foi idealizado pela equipe de recrutamento da beAnalytic como parte
 <br>
 O projeto de gestão de moradores inadimplentes conta com:<br>
 • Tela de login;<br>
-<br>
 • Redirecionamento para área de controle do usuário;<br>
+<br>
     A área de controle contém:<br>
     • CRUD - Create, Read, Update, Delete;<br>
     • Filtro para identificar pessoas inadimplentes;<br>
